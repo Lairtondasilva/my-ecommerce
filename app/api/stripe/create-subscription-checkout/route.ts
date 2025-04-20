@@ -44,6 +44,8 @@ export async function POST(req: NextRequest) {
   const metadata = {
     testeId,
     price,
+    userId,
+    userEmail,
   };
 
   //   Precisamos criar um cliente na stripe para ter referência dele quando for criar o portal

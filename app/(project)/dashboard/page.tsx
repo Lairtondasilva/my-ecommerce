@@ -1,11 +1,10 @@
 import { handleAuth } from "@/app/actions/handle-auth";
 import { auth } from "@/app/libs/auth";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function Dashboard() {
   const session = await auth();
-
-  console.log(session);
 
   if (!session) {
     redirect("/login");
@@ -18,6 +17,13 @@ export default async function Dashboard() {
       <p>
         {session?.user?.email ? session.user.email : "usuário não está logado"}
       </p>
+
+      <Link
+        href="/pagamentos"
+        className="border rounded-md px-2 py-1 mt-4 cursor-pointer text-center"
+      >
+        Pagamentos
+      </Link>
 
       {session?.user?.email && (
         <form action={handleAuth}>

@@ -1,8 +1,13 @@
+import { auth } from "@/app/libs/auth";
 import stripe from "@/app/libs/stripe";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { testeId, userEmail } = await req.json();
+  const { testeId } = await req.json();
+
+  const session = await auth();
+  const userEmail = session?.user?.email;
+  const userId = session?.user?.id;
 
   const price = process.env.STRIPE_PRODUCT_PRICE_ID!;
 
@@ -18,6 +23,8 @@ export async function POST(req: NextRequest) {
   const metadata = {
     testeId,
     price,
+    ...(userId && { userId }),
+    ...(userEmail && { userEmail }),
   };
 
   try {

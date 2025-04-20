@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
         external_reference: testeId, // isso impacta na pontuação do mercado pago
         metadata: {
           testeId, // isso vira snake_case no mercadopago -> teste_id
+          userEmail,
         },
         ...(userEmail && { payer: { email: userEmail } }), // também impacta na pontuação do mercado pago
         items: [
